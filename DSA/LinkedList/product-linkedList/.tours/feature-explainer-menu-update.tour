@@ -1,0 +1,31 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "Menu 3: Update Product",
+  "description": "How an existing product is found and patched.",
+  "steps": [
+    {
+      "file": "src/cli.ts",
+      "line": 73,
+      "title": "updateById",
+      "description": "Situation: prints the list, then asks for an ID. Gotcha: an unknown ID stops here with a message."
+    },
+    {
+      "file": "src/product-core.ts",
+      "line": 110,
+      "title": "Find by ID",
+      "description": "Mechanism: walks the list comparing IDs case-insensitively. Returns the node, not the product, so the CLI reads `found.data`."
+    },
+    {
+      "file": "src/cli.ts",
+      "pattern": "let patch: object = {};",
+      "title": "Build the Patch",
+      "description": "Mechanism: each field asks with 'Leave empty to skip'. Only filled fields go into `patch`."
+    },
+    {
+      "file": "src/product-core.ts",
+      "line": 139,
+      "title": "Apply the Patch",
+      "description": "Mechanism: checks each field's type, then calls the setter. Gotcha: a wrong type logs an error, and the other fields may still have been applied before it."
+    }
+  ]
+}

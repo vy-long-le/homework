@@ -1,0 +1,25 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "Menu 4: Delete Product",
+  "description": "How a product is confirmed and removed from the list.",
+  "steps": [
+    {
+      "file": "src/cli.ts",
+      "line": 110,
+      "title": "deleteById",
+      "description": "Situation: prints the list, asks for an ID, shows the match. Gotcha: nothing is removed until the user confirms."
+    },
+    {
+      "file": "src/cli.ts",
+      "pattern": "1. Yes\\n2. No",
+      "title": "Confirmation",
+      "description": "Mechanism: choice 2 cancels. Any other valid choice removes. The menu only accepts 1 or 2."
+    },
+    {
+      "file": "src/product-core.ts",
+      "line": 187,
+      "title": "Remove the Node",
+      "description": "Mechanism: finds the previous node, then relinks around the target. Gotcha: the tail pointer is updated only when the last node is removed."
+    }
+  ]
+}

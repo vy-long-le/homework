@@ -1,0 +1,25 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "Menu 5: Search Product",
+  "description": "How a product is searched by ID or by name.",
+  "steps": [
+    {
+      "file": "src/cli.ts",
+      "line": 133,
+      "title": "searchProduct",
+      "description": "Situation: asks for search type first. Mechanism: 1 = by ID, anything else = by name. Gotcha: the menu only offers 1 or 2, so the else branch is effectively 'by name'."
+    },
+    {
+      "file": "src/product-core.ts",
+      "line": 124,
+      "title": "Find by Name",
+      "description": "Mechanism: trims and lowercases the input, then matches with `includes`. So 'mac' finds 'MacBook'."
+    },
+    {
+      "file": "src/cli.ts",
+      "pattern": "console.table(found);",
+      "title": "Show Results",
+      "description": "Mechanism: prints every match in a table. Next: compare with the by-ID branch, which prints one row."
+    }
+  ]
+}

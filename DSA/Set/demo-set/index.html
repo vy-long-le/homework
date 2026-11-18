@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Product Manager</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main class="page">
+      <header class="page-header">
+        <h1>Product Manager</h1>
+        <p class="subtitle">
+          In-memory store. Reloading the page resets the list.
+        </p>
+      </header>
+
+      <section id="tools" class="card tools" hidden>
+        <label class="field">
+          <span>Search by name</span>
+          <input id="search-input" type="search" placeholder="e.g. laptop" />
+        </label>
+        <label class="field">
+          <span>Sort by</span>
+          <select id="sort-by">
+            <option value="">None</option>
+            <option value="name">Name</option>
+            <option value="price">Price</option>
+            <option value="quantity">Quantity</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>Direction</span>
+          <select id="sort-dir">
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
+          </select>
+        </label>
+      </section>
+
+      <section class="card">
+        <h2>Add product</h2>
+        <form id="add-form" class="form-grid">
+          <label class="field">
+            <span>Name</span>
+            <input
+              id="add-name"
+              name="name"
+              type="text"
+              autocomplete="off"
+              required
+            />
+          </label>
+          <label class="field">
+            <span>Price</span>
+            <input
+              id="add-price"
+              name="price"
+              type="number"
+              inputmode="decimal"
+              autocomplete="off"
+              min="0"
+              step="any"
+              required
+            />
+          </label>
+          <label class="field">
+            <span>Quantity</span>
+            <input
+              id="add-quantity"
+              name="quantity"
+              type="number"
+              inputmode="numeric"
+              autocomplete="off"
+              min="0"
+              step="1"
+              required
+            />
+          </label>
+          <button type="submit" class="btn btn-primary">Add</button>
+        </form>
+        <p id="add-error" class="error" role="alert" hidden></p>
+      </section>
+
+      <section id="edit-section" class="card" hidden>
+        <h2>Update product</h2>
+        <p class="muted">Leave a field blank to keep its current value.</p>
+        <form id="edit-form" class="form-grid" novalidate>
+          <label class="field">
+            <span>ID</span>
+            <input id="edit-id" type="text" readonly />
+          </label>
+          <label class="field">
+            <span>Name</span>
+            <input id="edit-name" name="name" type="text" autocomplete="off" />
+          </label>
+          <label class="field">
+            <span>Price</span>
+            <input
+              id="edit-price"
+              name="price"
+              type="number"
+              inputmode="decimal"
+              autocomplete="off"
+            />
+          </label>
+          <label class="field">
+            <span>Quantity</span>
+            <input
+              id="edit-quantity"
+              name="quantity"
+              type="number"
+              inputmode="numeric"
+              autocomplete="off"
+            />
+          </label>
+          <div class="button-row">
+            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="button" id="edit-cancel" class="btn">Cancel</button>
+          </div>
+        </form>
+        <p id="edit-error" class="error" role="alert" hidden></p>
+      </section>
+
+      <section class="card">
+        <h2>Products</h2>
+        <p id="empty-message" class="muted" hidden>List is empty.</p>
+        <div class="table-wrap">
+          <table id="product-table">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col" class="num">Price</th>
+                <th scope="col" class="num">Quantity</th>
+                <th scope="col" class="actions">Actions</th>
+              </tr>
+            </thead>
+
+            <tbody id="product-body"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="./dist/ui.js"></script>
+  </body>
+</html>

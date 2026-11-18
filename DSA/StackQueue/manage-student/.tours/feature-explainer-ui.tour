@@ -1,0 +1,61 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "UI functions in ui.ts (ADHD-friendly)",
+  "description": "9 steps, about 10 minutes. Each step: what it does, what to try, what to watch for.",
+  "steps": [
+    {
+      "file": "src/ui.ts",
+      "line": 5,
+      "title": "1 of 9: GetUIElement (find elements by id)",
+      "description": "**Do:** read lines 5 to 34, then move on.\n\n**What:** wraps `document.getElementById` and checks the element type.\n\n**Why:** a wrong id throws a clear error instead of a silent `null`.\n\n**Gotcha:** `getInput()` and `getForm()` throw if the id exists but is the wrong tag."
+    },
+    {
+      "file": "src/ui.ts",
+      "line": 36,
+      "title": "2 of 9: SeedData.load (5 starter students)",
+      "description": "**Do:** look at `load()` on line 45.\n\n**What:** for each seed row it calls `createPendingStudent`, then `approvedPendingStudent`.\n\n**Why:** a new student only enters the wait queue. Without the approve call the table would stay empty.\n\n**Try:** reload the page. You see S001 to S005."
+    },
+    {
+      "file": "src/ui.ts",
+      "line": 54,
+      "title": "3 of 9: renderStudent (draw the table)",
+      "description": "**Do:** follow lines 54 to 86.\n\n**What:** clears `#student-body`, then builds one `<tr>` per student. The Delete button stores the id in `data-id`.\n\n**Why:** `textContent` is used, so a name like `<b>x</b>` shows as text. No HTML injection.\n\n**Gotcha:** an empty list shows `#empty-state` instead of rows."
+    },
+    {
+      "file": "src/ui.ts",
+      "line": 88,
+      "title": "4 of 9: refresh (search + redraw)",
+      "description": "**Do:** read lines 88 to 117.\n\n**What:** clears the message, reads `#name-search-input`, then gets either all students or `getStudentsByName` results, then calls `renderStudent`.\n\n**Why:** every other action calls this to redraw, so the current search stays applied.\n\n**Try:** type `binh` in the search box. The table filters as you type.\n\n**Gotcha:** `getStudentsByName` throws when nothing matches. The catch shows the error text."
+    },
+    {
+      "file": "src/ui.ts",
+      "line": 121,
+      "title": "5 of 9: handleAddSubmitToQueue (Add to queue)",
+      "description": "**Do:** read lines 121 to 148.\n\n**What:** stops the page reload with `preventDefault`, reads name, age and the female radio by id, then calls `createPendingStudent`.\n\n**Why:** if female is not checked, the gender is male. That matches the default radio.\n\n**Try:** add a student. The form resets and the message says the student is queued. The table does NOT change yet.\n\n**Gotcha:** an age outside 1 to 100 comes back as an error message from the service."
+    },
+    {
+      "file": "src/ui.ts",
+      "line": 150,
+      "title": "6 of 9: handleClickApproved (Approve next)",
+      "description": "**Do:** read lines 150 to 163.\n\n**What:** takes the oldest queued student (first in, first out), then calls `refresh()`.\n\n**Try:** click Approve next. The student you added appears in the table.\n\n**Gotcha:** with an empty queue, the service throws and the message shows the error."
+    },
+    {
+      "file": "src/ui.ts",
+      "line": 166,
+      "title": "7 of 9: handleClickDelete (Delete a row)",
+      "description": "**Do:** read lines 166 to 190.\n\n**What:** one click listener on `#student-body` (event delegation). `closest(\"button[data-id]\")` finds which row's button was clicked, then asks `confirm`, then `deleteStudentById`.\n\n**Why:** rows are rebuilt on every refresh, so one listener on the parent survives. Listeners on each button would not.\n\n**Gotcha:** the deleted student goes on a stack, not away for good."
+    },
+    {
+      "file": "src/ui.ts",
+      "line": 192,
+      "title": "8 of 9: undoDeletion (Undo last deletion)",
+      "description": "**Do:** read lines 192 to 204.\n\n**What:** pops the most recently deleted student (last in, first out) and puts it back in the list.\n\n**Try:** delete two students, then click Undo twice. They return in reverse order.\n\n**Gotcha:** an empty stack gives an error message."
+    },
+    {
+      "file": "src/ui.ts",
+      "line": 206,
+      "title": "9 of 9: Wiring (listeners + startup)",
+      "description": "**Do:** read lines 206 to 230.\n\n**What:** connects each element to its handler: add form, approve, delete (on tbody), undo, search input, and Show all. Last two lines load the seed data and draw the table.\n\n**Gotcha:** the search and Show all handlers are arrow functions, so `this` stays the `DisplayData` object. Passing `display.refresh` directly would break `this`.\n\n**You can now:** trace any button click to the service call and back to the table.\n\n**Next:** set a breakpoint on line 88 and click Approve next."
+    }
+  ]
+}

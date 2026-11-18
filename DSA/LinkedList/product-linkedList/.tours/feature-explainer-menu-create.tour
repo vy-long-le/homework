@@ -1,0 +1,31 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "Menu 1: Create Product",
+  "description": "How a new product gets into the list.",
+  "steps": [
+    {
+      "file": "src/cli.ts",
+      "line": 56,
+      "title": "addProduct",
+      "description": "Situation: asks for name, price, image URL, then prepend or append. Gotcha: each answer is re-asked until valid."
+    },
+    {
+      "file": "src/cli.ts",
+      "pattern": "const product = new Product(name!, price!, img!);",
+      "title": "Build the Product",
+      "description": "Mechanism: the `!` is safe because the ask helpers never return null without canBeEmpty. The constructor assigns the next ID (P001, P002...)."
+    },
+    {
+      "file": "src/product-core.ts",
+      "line": 15,
+      "title": "ID Generation",
+      "description": "Mechanism: `++Product.idCounter` is static, so IDs are unique for the whole run. Gotcha: IDs restart at P001 on each program start, since the counter is not saved."
+    },
+    {
+      "file": "src/product-core.ts",
+      "line": 66,
+      "title": "Insert Into List",
+      "description": "Mechanism: `createProduct` picks prepend or append. Next: the menu prints the result with `console.log` once the insert finishes."
+    }
+  ]
+}

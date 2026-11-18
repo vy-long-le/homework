@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manage Student</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header class="page-header">
+        <h1>Manage Student</h1>
+      </header>
+
+      <section class="card" aria-labelledby="add-title">
+        <h2 id="add-title">Register</h2>
+        <form id="add-form" class="form-row">
+          <div class="field">
+            <label for="name-input">Name</label>
+            <input
+              type="text"
+              id="name-input"
+              required
+              placeholder="Enter a name"
+            />
+          </div>
+
+          <div class="field field-narrow">
+            <label for="age-input">Age</label>
+            <input
+              type="number"
+              min="1"
+              max="100"
+              step="1"
+              id="age-input"
+              placeholder="Age"
+              required
+            />
+          </div>
+
+          <fieldset class="field radio-group">
+            <legend>Gender</legend>
+            <label class="radio">
+              <input type="radio" name="gender" value="male" checked />
+              <span>Male</span>
+            </label>
+            <label class="radio">
+              <input type="radio" name="gender" value="female" id="female" />
+              <span>Female</span>
+            </label>
+          </fieldset>
+
+          <div class="actions">
+            <button type="submit" class="btn btn-primary">Add to queue</button>
+            <button type="reset" class="btn">Cancel</button>
+          </div>
+        </form>
+        <p class="hint">New students wait in the queue until approved.</p>
+        <p id="message" class="message" role="status" aria-live="polite"></p>
+      </section>
+
+      <section class="card" aria-labelledby="queue-title">
+        <h2 id="queue-title">Approval &amp; undo</h2>
+        <div class="actions">
+          <button type="button" id="approve-btn" class="btn btn-primary">
+            Approve next student
+          </button>
+          <button type="button" id="undo-btn" class="btn">
+            Undo last deletion
+          </button>
+        </div>
+        <p class="hint">
+          Approval is first-in, first-out. Undo restores the most recently
+          deleted student.
+        </p>
+      </section>
+
+      <section class="card" aria-labelledby="search-title">
+        <h2 id="search-title">Search By name</h2>
+        <div class="search-grid">
+          <div class="form-row">
+            <div class="field">
+              <input
+                type="text"
+                id="name-search-input"
+                placeholder="e.g. Binh"
+                autocomplete="off"
+              />
+            </div>
+            <button type="button" id="clear-search-btn" class="btn btn-ghost">
+              Show all
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="list-title">
+        <h2 id="list-title">Students</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th class="col-action">Action</th>
+              </tr>
+            </thead>
+            <tbody id="student-body"></tbody>
+          </table>
+        </div>
+        <p id="empty-state" class="empty" hidden>No students to show.</p>
+      </section>
+    </main>
+    <script type="module" src="./dist/ui.js"></script>
+  </body>
+</html>

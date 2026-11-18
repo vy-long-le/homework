@@ -1,0 +1,25 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "CLI Main Menu",
+  "description": "Start here. The menu loop routes each choice to one action.",
+  "steps": [
+    {
+      "file": "src/cli.ts",
+      "line": 160,
+      "title": "Main Menu Loop",
+      "description": "Situation: the whole CLI is this `while (true)` loop. Mechanism: it asks for a number 0-5 and runs one action per pass. Gotcha: choice 2 (Read) calls `printAll()` inline, so there is no separate read function."
+    },
+    {
+      "file": "src/cli.ts",
+      "pattern": "switch (choice)",
+      "title": "Routing Table",
+      "description": "Mechanism: each case calls one menu function. 1 = Create, 3 = Update, 4 = Delete, 5 = Search. Next: open the tour for the action you want to change."
+    },
+    {
+      "file": "src/cli.ts",
+      "pattern": "rl.close();",
+      "title": "Exit",
+      "description": "Gotcha: case 0 closes the readline interface and returns. Without `return`, the loop would keep running after close."
+    }
+  ]
+}
