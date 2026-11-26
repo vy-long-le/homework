@@ -200,7 +200,7 @@ class LinkedList<T extends Product> {
     let result: string = "";
 
     while (currentNode !== null) {
-      result += `ID: ${currentNode.data.id} - Name: ${currentNode.data.name} - Image: ${currentNode.data.image} - Quantity: ${currentNode.data.quantity} - Discount: ${currentNode.data.discount}% - Amount: ${currentNode.data.amount} -> \n`;
+      result += `ID: ${currentNode.data.id} - Name: ${currentNode.data.name} - Image: ${currentNode.data.image} - Quantity: ${currentNode.data.quantity} - Discount: ${currentNode.data.discount}% - Amount: ${currentNode.data.amount} ->\n`;
       currentNode = currentNode.next;
     }
     console.log(`${result}null`);
