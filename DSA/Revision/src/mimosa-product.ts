@@ -155,14 +155,17 @@ class LinkedList<T extends Product> {
     return this.head === null;
   }
 
-  prepend(data: T): ListNode<T> {
+  prepend(data: T): ListNode<T> | undefined {
     const newNode = new ListNode<T>(data);
     if (this.isEmpty()) {
       this.head = newNode;
       this.tail = newNode;
       return newNode;
     }
-
+    if (this.hasDuplicate(data.id)) {
+      console.log(`data with ID (${data.id}) is duplicated`);
+      return;
+    }
     const firstNode = this.head;
     this.head = newNode;
     newNode.next = firstNode;
@@ -170,7 +173,11 @@ class LinkedList<T extends Product> {
     return newNode;
   }
 
-  append(data: T): ListNode<T> {
+  append(data: T): ListNode<T> | undefined {
+    if (this.hasDuplicate(data.id)) {
+      console.log(`data with ID (${data.id}) is duplicated`);
+      return;
+    }
     const lastListNode = this.tail;
 
     if (lastListNode === null) {
@@ -197,6 +204,23 @@ class LinkedList<T extends Product> {
       currentNode = currentNode.next;
     }
     console.log(`${result}null`);
+  }
+
+  hasDuplicate(id: number): boolean {
+    let current = this.head;
+    if (current === null) {
+      return false;
+    }
+
+    while (current !== null) {
+      if (current.data.id === id) {
+        return true;
+      }
+
+      current = current.next;
+    }
+
+    return false;
   }
 }
 
