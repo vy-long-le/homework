@@ -514,10 +514,11 @@ Enter your choice(0-2): `,
           newProducts.forEach((p) => products.push(p));
           haveProducts = true;
           console.log("products array before sort");
-          printProducts(products);
+          const arr = [...products];
+          printProducts(arr);
 
           console.time("bbSortByPrice");
-          const sorted = bbSortByPrice(products);
+          const sorted = bbSortByPrice(arr);
           console.timeEnd("bbSortByPrice");
 
           printProducts(sorted);
@@ -526,10 +527,11 @@ Enter your choice(0-2): `,
           if (haveProducts) {
             console.log("products array before sort");
             products.forEach((p) => calculateAmount(p));
-            printProducts(products);
+            const arr = [...products];
+            printProducts(arr);
 
             console.time("quickSortByAmount");
-            const quickSort = quickSortByAmount(products);
+            const quickSort = quickSortByAmount(arr);
             console.timeEnd("quickSortByAmount");
             printProducts(quickSort);
           } else {

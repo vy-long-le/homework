@@ -8,10 +8,17 @@ export const printProducts = (items: Product[]): void => {
   console.table(items);
 };
 
+// ----------------------------- ADD -----------------------------
 export const addProduct = (item: Product): void => {
+  const found = findProductById(item.id, products);
+  if (found) {
+    console.log(`item with ID (${item.id}} is duplicated`);
+    return;
+  }
   products.push(item);
 };
 
+// ----------------------------- DELETE -----------------------------
 export const deleteProductById = (items: Product[], id: number): void => {
   const found = findProductById(id, items);
   if (!found) return console.log(`can not find product with ID (${id})`);
@@ -19,11 +26,13 @@ export const deleteProductById = (items: Product[], id: number): void => {
   console.log("delete success");
 };
 
-const findProductById = (id: number, items: Product[]): Product | undefined => {
+// ----------------------------- FIND -----------------------------
+export const findProductById = (id: number, items: Product[]): Product | undefined => {
   const found = items.find((i) => i.id === id);
   return found;
 };
 
+// ----------------------------- UPDATE -----------------------------
 export const updateProduct = (id: number, patch: ProductPatch): void => {
   const found = findProductById(id, products);
   if (!found) return console.log(`can not find product with ID (${id})`);
@@ -36,11 +45,13 @@ export const updateProduct = (id: number, patch: ProductPatch): void => {
   console.log("update success");
 };
 
+// ----------------------------- CALCULATE AMOUNT -----------------------------
 export const calculateAmount = (item: Product): void => {
   const result = (item.price * item.quantity * (100 - item.discount)) / 100;
   item.amount = result;
 };
 
+// ----------------------------- LINEAR SEARCH -----------------------------
 export const lnSearch = (items: Product[], query: string): Product[] | void => {
   const normalizedQuery = query.trim().toLowerCase();
   if (normalizedQuery === "") {
@@ -64,6 +75,7 @@ export const lnSearch = (items: Product[], query: string): Product[] | void => {
   return found;
 };
 
+// ----------------------------- BINARY SEARCH -----------------------------
 export const bnSearchById = (items: Product[], id: number): Product | void => {
   let low = 0;
   let high = items.length - 1;
@@ -86,6 +98,7 @@ export const bnSearchById = (items: Product[], id: number): Product | void => {
   console.log(`can not find product with ID (${id})`);
 };
 
+// ----------------------------- BUBBLE SORT -----------------------------
 export const bbSortByPrice = (items: Product[]): Product[] => {
   if (items.length <= 1) {
     return items;
@@ -106,6 +119,7 @@ export const bbSortByPrice = (items: Product[]): Product[] => {
   return items;
 };
 
+// ----------------------------- QUICK SORT -----------------------------
 export const quickSortByAmount = (items: Product[]): Product[] => {
   if (items.length <= 1) {
     return items;

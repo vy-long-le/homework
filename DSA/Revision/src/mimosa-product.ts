@@ -1,3 +1,5 @@
+import { findProductById } from "./array.js";
+
 export interface Product {
   id: number;
   name: string;
@@ -38,7 +40,7 @@ export const products: Product[] = [
   },
 ];
 
-class Stack<T> {
+class Stack<T extends Product> {
   private items: T[] = [];
 
   constructor(private readonly capacity: number) {}
@@ -56,7 +58,11 @@ class Stack<T> {
       console.log("Stack Full");
       return;
     }
-
+    const found = findProductById(item.id, this.items);
+    if (found) {
+      console.log(`item with ID (${item.id}) is duplicated`);
+      return;
+    }
     this.items.push(item);
   }
 
@@ -83,7 +89,7 @@ class Stack<T> {
 
 export const productsStack = new Stack<Product>(100);
 
-class Queue<T> {
+class Queue<T extends Product> {
   private items: T[] = [];
 
   constructor(private readonly capacity: number) {}
@@ -97,6 +103,11 @@ class Queue<T> {
   }
 
   enqueue(item: T): void {
+    const found = findProductById(item.id, this.items);
+    if (found) {
+      console.log(`item with ID (${item.id}) is duplicated`);
+      return;
+    }
     this.items.push(item);
   }
 
