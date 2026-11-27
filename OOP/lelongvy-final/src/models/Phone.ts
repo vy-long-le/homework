@@ -11,12 +11,13 @@ export class Phone extends Product {
     image: string,
     os: string,
   ) {
-    super(name, quantity, price, image);
     const trimOS = os.trim();
     if (trimOS === "") {
       throw new Error("os text must not be empty");
     }
-    this.os = os;
+
+    super(name, quantity, price, image);
+    this.os = trimOS;
   }
 
   printDetails(): void {

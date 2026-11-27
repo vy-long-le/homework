@@ -18,7 +18,7 @@ export class Laptop extends Product {
       throw new Error("cpu text must not be empty");
     }
     const trimRAM = ram.trim();
-    if (trimCPU === "") {
+    if (trimRAM === "") {
       throw new Error("ram text must not be empty");
     }
 

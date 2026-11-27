@@ -11,12 +11,13 @@ export class Accessory extends Product {
     image: string,
     brand: string,
   ) {
-    super(name, quantity, price, image);
     const trimBrand = brand.trim();
     if (trimBrand === "") {
       throw new Error("brand text must not be empty");
     }
-    this.brand = brand;
+
+    super(name, quantity, price, image);
+    this.brand = trimBrand;
   }
 
   printDetails(): void {

@@ -5,12 +5,12 @@ export class OrderItem {
   private quantity: number;
 
   constructor(p: Product, qty: number) {
-    if (!isValidNumber(qty, 0, p.getSoLuong(), true)) {
+    if (!isValidNumber(qty, 1, p.getSoLuong(), true)) {
       throw new Error(
         `buy quantity (${qty}) exceeds store quantity (${p.getSoLuong()})`,
       );
     }
-
+    p.setSoLuong(p.getSoLuong() - qty);
     this.product = p;
     this.quantity = qty;
   }

@@ -28,6 +28,9 @@ export class Supplier {
     if (!this.products.has(product.getMaSP())) {
       this.products.set(product.getMaSP(), product);
     }
+    if (product.getSupplier !== null) {
+      product.getSupplier()?.removeProduct(product);
+    }
     product.setSupplier(this);
   }
 
@@ -37,6 +40,14 @@ export class Supplier {
     }
     const arr = this.products.values();
     return [...arr];
+  }
+
+  removeProduct(p: Product): void {
+    if (this === p.getSupplier()) {
+      this.products.delete(p.getMaSP());
+    } else {
+      throw new Error("not your product to remove");
+    }
   }
 
   printSupplierProductsLink(): void {

@@ -24,13 +24,17 @@ export class Warehouse {
     }
   }
 
-  printProducts(): void {
-    if (this.products.length === 0) {
+  getProducts(): Product[] {
+    return [...this.products];
+  }
+
+  printProducts(prods: Product[]): void {
+    if (prods.length === 0) {
       console.log("warehouse empty");
       return;
     }
 
-    const arr = this.products.map((p) => ({
+    const arr = prods.map((p) => ({
       ID: p.getId(),
       MaSP: p.getMaSP(),
       TenSP: p.getTenSP(),
@@ -48,20 +52,19 @@ export class Warehouse {
   }
 
   removeProductById(id: number): void {
-    if (!isValidNumber(id, 0, Number.MAX_SAFE_INTEGER, true)) {
+    if (!isValidNumber(id, 1, Number.MAX_SAFE_INTEGER, true)) {
       throw new Error("id must be a positive integer");
     }
 
     const found = this.products.find((p) => p.getId() === id);
     if (!found) {
-      console.log(`can not find product with ID (${id})`);
-      return;
+      throw new Error(`can not find product with ID (${id})`);
     }
 
     this.products.splice(this.products.indexOf(found), 1);
   }
 
-  getMaxPriceProduct(): Product {
+  sortPriceDescByPrice(): Product[] {
     if (this.products.length === 0) {
       throw new Error("warehouse is empty");
     }
@@ -70,7 +73,13 @@ export class Warehouse {
       (a, b) => b.getDonGia() - a.getDonGia(),
     );
 
-    return sortDescByPrice[0]!;
+    return sortDescByPrice;
+  }
+
+  getMaxPriceProduct(): Product {
+    const sorted = this.sortPriceDescByPrice();
+
+    return sorted[0]!;
   }
 
   getMaxQtyProduct(): Product {

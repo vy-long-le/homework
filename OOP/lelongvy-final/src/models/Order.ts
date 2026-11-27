@@ -20,11 +20,13 @@ export class Order {
   }
 
   displayOrder(): void {
-    const amountArr: number[] = this.items.map((i) => i.getAmount());
-    const total: number = amountArr.reduce((prev, current) => prev + current);
+    let total = 0;
+    for (const i of this.items) {
+      total += i.getAmount();
+    }
     const arr = this.items.map((i) => ({
       OrderId: this.orderId,
-      ProductId: i.getProduct().getId(),
+      MaSP: i.getProduct().getMaSP(),
       TenSP: i.getProduct().getTenSP(),
       SoLuong: i.getQuantity(),
       DonGia: i.getProduct().getDonGia(),

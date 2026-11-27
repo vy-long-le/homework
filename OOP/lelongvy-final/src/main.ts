@@ -8,10 +8,23 @@ import {
   Order,
 } from "./models/index.js";
 
+// ------------------------- HELPERS -------------------------
 const section = (text: string): void => {
-  console.log(`--------------------- ${text} ---------------------`);
+  console.log(`\n--------------------- ${text} ---------------------`);
 };
 
+const performAction = async (
+  action: () => void | Promise<void>,
+): Promise<void> => {
+  try {
+    await action();
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    console.error(`Action failed: ${message}`);
+  }
+};
+
+section("VALID INPUTS");
 const laptop: Laptop[] = [
   new Laptop(
     "Laptop Dell",
@@ -74,6 +87,28 @@ const accessory: Accessory[] = [
   new Accessory("JBL Go 4 Speaker", 14, 1_200_000, "jbl-go-4.jpg", "JBL"),
 ];
 
+section("INVALID INPUTS");
+
+performAction(() => {
+  new Phone("", 5, 1_000, "phone.jpg", "Android");
+});
+
+performAction(() => {
+  new Phone("Test Phone", -1, 1_000, "phone.jpg", "Android");
+});
+
+performAction(() => {
+  new Phone("Test Phone", 5, -1, "phone.jpg", "Android");
+});
+
+performAction(() => {
+  new Laptop("Test Laptop", 5, 1_000, "laptop.jpg", "", "16 GB");
+});
+
+performAction(() => {
+  new Phone("Test Phone", 5, 1_000, "phone.jpg", " ");
+});
+
 const products: Product[] = [laptop, phone, accessory].flat();
 
 section("Inheritance, Polymorphism, and Abstraction".toUpperCase());
@@ -102,10 +137,17 @@ supplier2.printSupplierProductsLink();
 
 section("AGGREGATION");
 const ware1 = new Warehouse("Kho CNTT Da Nang");
-products.forEach((p) => ware1.addProduct(p));
-ware1.printProducts();
+for (const p of products) {
+  ware1.addProduct(p);
+}
+ware1.printProducts(ware1.getProducts());
 ware1.removeProductById(1);
-ware1.printProducts();
+ware1.printProducts(ware1.getProducts());
+
+section("INVALID: Remove an id that is not in the warehouse");
+performAction(() => ware1.removeProductById(100));
+section("INVALID: Add the same product twice to the warehouse");
+performAction(() => ware1.addProduct(products[1]!));
 
 section("COMPOSITION");
 const order1 = new Order();
@@ -113,6 +155,8 @@ for (const p of phone) {
   order1.addItem(p, Math.floor(p.getSoLuong() / 2));
 }
 order1.displayOrder();
+section("INVALID: Buy more than stock");
+performAction(() => order1.addItem(phone[0]!, 1000));
 
 section("BONUS");
 section("SP Co GIA Cao Nhat");
@@ -120,6 +164,9 @@ ware1.getMaxPriceProduct().displayInfo();
 
 section("SP Co SO LUONG Cao Nhat");
 ware1.getMaxQtyProduct().printDetails();
+
+section("Sap Xep Theo Don Gia Giam Dan");
+ware1.printProducts(ware1.sortPriceDescByPrice());
 
 section("Tong Gia Tri Kho Hang");
 console.log(

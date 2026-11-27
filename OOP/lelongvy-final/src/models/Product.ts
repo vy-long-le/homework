@@ -103,13 +103,13 @@ export abstract class Product {
     return this.applyDis;
   }
 
+  resetDiscount(): void {
+    this.applyDis = false;
+  }
+
   calculateDiscount(): number {
     this.applyDis = true;
     return Number(((this.getDonGia() * this.discount) / 100).toFixed(2));
-  }
-
-  resetDiscount(): void {
-    this.applyDis = false;
   }
 
   displayInfo(): void {
